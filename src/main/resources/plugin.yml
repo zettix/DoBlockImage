@@ -1,0 +1,20 @@
+name: DoBlockImage
+main: com.zettix.minecraft.doblockimage.DoBlockImage
+version: 1.0
+
+commands:
+  doblockimage:
+    description: This makes blocks from an image.
+    usage: /doblockimage
+    permission: DoBlockImage.doblockimage
+    permission-message: You don't have <permission>
+
+permissions:
+  DoBlockImage.*:
+    description: Give access to all DoBlockImage commands
+    children:
+      DoBlockImage.doblockimage: true
+  DoBlockImage.doblockimage:
+    description: Creates blocks from an image.
+    default: true
+
