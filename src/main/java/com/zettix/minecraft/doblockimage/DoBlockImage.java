@@ -1,6 +1,9 @@
 package com.zettix.minecraft.doblockimage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -13,15 +16,18 @@ import org.bukkit.command.Command;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class DoBlockImage extends JavaPlugin {
+	private List<BlockClone> undoList;
 
 	@Override
 	public void onEnable() {
 		// TODO: Probably nothing.
+		undoList = null;
 		getLogger().info("onEnable has been invoked");
 		
 	}
@@ -36,9 +42,10 @@ public class DoBlockImage extends JavaPlugin {
 	int mod_max_dim = 100;
 	static final String SpigotUrl = new String("http://www.spigotmc.org/resources/doblockimage.5454/");
 	
-	void doImage(String user_webaddr, Player p, int px, int py, int pz, World world, 
+	void doImage(String user_webaddr, Player p, int px, int py, int pz, World world,
 			int usermax, String key, boolean erase) {
 		boolean debug = false;
+		undoList = new ArrayList<>();
 		
 		BlockPicker bp = new BlockPicker();
 		OrientationOffsets offsob = new OrientationOffsets();
@@ -140,6 +147,7 @@ public class DoBlockImage extends JavaPlugin {
 
 					// world space
 				    org.bukkit.block.Block myblock = world.getBlockAt(x_s, y_s, z_s);
+				    undoList.add(new BlockClone(x_s, y_s, z_s, myblock.getType()));
 					// myblock.setType(Material.DIAMOND_BLOCK);
 				    Material m = Material.AIR;
 				    if (! erase) {
@@ -183,6 +191,18 @@ public class DoBlockImage extends JavaPlugin {
 		}
 		
 	}
+
+	public void doUndo(Player p, World world) {
+		if (undoList == null) {
+			p.sendMessage("DoBlockImage: Undo buffer empty.");
+			return;
+		}
+		for (BlockClone bc : undoList) {
+			org.bukkit.block.Block myblock = world.getBlockAt(bc.x_s, bc.y_s, bc.z_s);
+			myblock.setType(bc.material);
+		}
+		undoList = null;
+	}
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -190,6 +210,7 @@ public class DoBlockImage extends JavaPlugin {
 			int urlindex = 0;
 			int maxheight = -1;  // no user max, mod max is 100.
 			boolean erase = false;
+			boolean undo = false;
 			if (!(sender instanceof Player)) {
 				sender.sendMessage("This command can only be run by a player.");
 				return false;
@@ -205,14 +226,18 @@ public class DoBlockImage extends JavaPlugin {
 				  }
 			  } else if (args.length == 2) {
 				  if ("e".equals(args[0])) {
-					  erase = true;
+				  	erase = true;
 				  } else {
-				    maxheight = Integer.parseInt(args[0]);
+				  	maxheight = Integer.parseInt(args[0]);
 				  }
 		          urlindex = 1;
 			  } else if (args.length != 1) {
 				  sender.sendMessage("Bad input. Usage: doblockimage [e] [maxHeight] imageUrl");
 				  return false;
+			  } else {  // args.length == 1
+				  if ("u".equals(args[0])) {
+					  undo = true;
+				  }
 			  }
 			  // OK We're going to do it.
 			  Player player = (Player) sender;       
@@ -249,7 +274,11 @@ public class DoBlockImage extends JavaPlugin {
 			  }
 			  // getLogger().info("Running doImage( " + args[urlindex] + ",player, " + x1 + "," + y1 + "," + z1 + ", " + " maxh: " + maxheight + " key:" + key
 			  //		  + " Erase: " + erase);
-			  this.doImage(args[urlindex], player, x1, y1, z1, world, maxheight, key, erase);
+				if (undo) {
+			  		doUndo(player, world);
+				} else {
+					doImage(args[urlindex], player, x1, y1, z1, world, maxheight, key, erase);
+				}
 			  return true;
 		     }
 		}
