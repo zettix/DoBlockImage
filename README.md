@@ -5,6 +5,10 @@ Copyright 2015 Sean Brennan
 
 Updated to work with latest Bukket server (1.11) and now with undo.
 
+Compile with: mvn clean install
+
+Put the resulting jar file in your minecraft server's plugins directory and restart your server.
+
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
