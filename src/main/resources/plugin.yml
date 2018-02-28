@@ -1,6 +1,6 @@
 name: DoBlockImage
 main: com.zettix.minecraft.doblockimage.DoBlockImage
-version: 1.2
+version: 1.3
 
 commands:
   doblockimage:
