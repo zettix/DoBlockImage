@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.zettix.minecraft</groupId>
   <artifactId>DoBlockImage</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.2</version>
     <build>
     <plugins>
         <plugin>
@@ -15,17 +15,17 @@
           </plugin>
       </plugins>
    </build>
-      <repositories>
+    <repositories>
        <repository>
-           <id>bukkit-repo</id>
-           <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
+         <id>spigot-repo</id>
+         <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
        </repository>
-   </repositories>
+    </repositories>
   <dependencies>
     <dependency>
       <groupId>org.bukkit</groupId>
       <artifactId>bukkit</artifactId>
-      <version>1.8-R0.1-SNAPSHOT</version>
+      <version>1.12.2-R0.1-SNAPSHOT</version>
       <type>jar</type>
       <scope>provided</scope>
     </dependency>
