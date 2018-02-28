@@ -1,5 +1,6 @@
 package com.zettix.minecraft.doblockimage;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,10 +52,22 @@ public class DoBlockImage extends JavaPlugin {
 		OrientationOffsets offsob = new OrientationOffsets();
 		try {
 			URL url = new URL(user_webaddr);
+			getLogger().info("Opening web address:" + url.toString());
 			BufferedImage image = null;
-			image = ImageIO.read(url.openStream());
-			Raster raster = image.getData();
-			Rectangle bounds = raster.getBounds();
+			InputStream inputStream = url.openStream();
+			if (inputStream.available() > 0) {
+				image = ImageIO.read(inputStream);
+			} else {
+				// punt
+				image = ImageIO.read(inputStream);
+				if (image == null) {
+					getLogger().info("Image read error! :" + inputStream.toString());
+					p.sendMessage("Image read error! :" + inputStream.toString());
+					return;
+				}
+			}
+				Raster raster = image.getData();
+				Rectangle bounds = raster.getBounds();
 			p.sendMessage("Image resolution: " + bounds.width + " " + bounds.height);
 			getLogger().info("Image resolution: " + bounds.width + " " + bounds.height);
 			getLogger().info("Image encoding: " + image.getColorModel().toString());

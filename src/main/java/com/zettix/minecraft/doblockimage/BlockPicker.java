@@ -12,7 +12,7 @@ public class BlockPicker {
 		// It basically averages the rgb values from one of the block textures.
 		block_and_radius = new HashMap<Material, int[]>();
         block_and_radius.put(Material.BRICK, new int[] {146, 99,86});
-        block_and_radius.put(Material.CACTUS, new int[] {12, 92,22});
+        // drops: block_and_radius.put(Material.CACTUS, new int[] {12, 92,22});
         block_and_radius.put(Material.CLAY, new int[] {158, 164,176});
         block_and_radius.put(Material.COAL_BLOCK, new int[] {18, 18,18});
         block_and_radius.put(Material.COAL_ORE, new int[] {115, 115,115});
@@ -23,12 +23,12 @@ public class BlockPicker {
         block_and_radius.put(Material.EMERALD_BLOCK, new int[] {81, 217,117});
         block_and_radius.put(Material.EMERALD_ORE, new int[] {109, 128,116});
         block_and_radius.put(Material.FURNACE, new int[] {113, 113,113});
-        block_and_radius.put(Material.GLASS, new int[] {60, 66,67});
+        // looks bad: block_and_radius.put(Material.GLASS, new int[] {60, 66,67});
         block_and_radius.put(Material.GOLD_BLOCK, new int[] {249, 236,78});
         block_and_radius.put(Material.GOLD_ORE, new int[] {143, 139,124});
         block_and_radius.put(Material.GRAVEL, new int[] {126, 124,122});
         block_and_radius.put(Material.HARD_CLAY, new int[] {150, 92,66});
-        block_and_radius.put(Material.ICE, new int[] {125, 173,255});
+        // looks bad: block_and_radius.put(Material.ICE, new int[] {125, 173,255});
         block_and_radius.put(Material.IRON_BLOCK, new int[] {219, 219,219});
         block_and_radius.put(Material.IRON_ORE, new int[] {135, 130,126});
         block_and_radius.put(Material.JACK_O_LANTERN, new int[] {185, 133,28});
@@ -53,7 +53,7 @@ public class BlockPicker {
         block_and_radius.put(Material.SOUL_SAND, new int[] {84, 64,51});
         block_and_radius.put(Material.SPONGE, new int[] {194, 195,84});
         block_and_radius.put(Material.STONE, new int[] {125, 125,125});
-        block_and_radius.put(Material.TNT, new int[] {169, 92,71});
+        // sometimes goes boom: block_and_radius.put(Material.TNT, new int[] {169, 92,71});
         block_and_radius.put(Material.WOOD, new int[] {156, 127,78});
         block_and_radius.put(Material.WOOL, new int[] {221, 221,221});
 	}
